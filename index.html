@@ -455,7 +455,8 @@ function calculateAll(){
   })).filter(p=>p.date && p.amount > 0).sort((a,b)=> new Date(a.date) - new Date(b.date));
 
   // baseline and withPrepay schedules
-  const baseline = buildSchedule(P, initialRate, totalMonths, startDate, [], roiChanges);
+const baseline = buildSchedule(P, initialRate, totalMonths, startDate, [], []);
+
   const withPrepay = buildSchedule(P, initialRate, totalMonths, startDate, prepayments, roiChanges);
 
   // summary numbers
