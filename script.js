@@ -372,21 +372,28 @@ const baseline = buildSchedule(P, initialRate, totalMonths, startDate, [], []);
   const baseInterest = baseline.rows.reduce((s,r)=>s + (r.interest||0), 0);
   const baseTotal = baseline.rows.reduce((s,r)=>s + (r.emi||0), 0);
   const withInterest = withPrepay.rows.reduce((s,r)=>s + (r.interest||0), 0);
+  $('interestWithPrepay').textContent = fmt(withInterest);
+
   const withTotal = withPrepay.rows.reduce((s,r)=>s + (r.emi||0) + (r.prepay||0), 0);
 
   $('emi').textContent = fmt(baseline.baseEmi || 0);
-  $('totalInterest').textContent = fmt(baseInterest);
+$('totalInterest').textContent = fmt(baseInterest) + " (Actual Payable)";
   $('totalPayment').textContent = fmt(baseTotal);
 
   const savedInterest = baseInterest - withInterest;
   const savedMonths = baseline.monthsTaken - withPrepay.monthsTaken;
-  $('afterPrepay').textContent = `${withPrepay.monthsTaken} mo | Saved interest: ${fmt(savedInterest)} | Saved months: ${savedMonths}`;
+$('afterPrepay').textContent =
+  `Interest Saved = ${fmt(baseInterest)} − ${fmt(withInterest)} = ${fmt(savedInterest)} | Tenure Reduced: ${savedMonths} months`;
 
   // Remaining months countdown (live)
-  const remainingMonths = withPrepay.monthsTaken;
-  const yearsLeft = Math.floor(remainingMonths / 12);
-  const monthsLeft = remainingMonths % 12;
-  $('remainingCountdown').textContent = `Remaining: ${remainingMonths} months (${yearsLeft}y ${monthsLeft}m)`;
+// Remaining months from today
+const today = new Date();
+const futureRows = withPrepay.rows.filter(r => r.date >= today);
+const remainingMonths = futureRows.length;
+const yearsLeft = Math.floor(remainingMonths / 12);
+const monthsLeft = remainingMonths % 12;
+$('remainingCountdown').textContent = 
+    `Remaining: ${remainingMonths} months (${yearsLeft}y ${monthsLeft}m)`;
 
   // table (with prepay)
   const tbody = $('scheduleTable').querySelector('tbody');
@@ -404,6 +411,7 @@ const baseline = buildSchedule(P, initialRate, totalMonths, startDate, [], []);
                     <td>${fmt(r.closing)}</td>`;
     tbody.appendChild(tr);
   });
+
 
   // chart
   try { renderCompareChart(baseline, withPrepay); } catch(e){ console.warn('Chart render failed', e); }
@@ -425,6 +433,7 @@ const baseline = buildSchedule(P, initialRate, totalMonths, startDate, [], []);
   // save last
   window._last = { baseline, withPrepay, roiChanges, prepayments, startDate };
   scheduleSave();
+  
 }
 
 /* ---------- CSV Export ---------- */
@@ -656,6 +665,5 @@ toggleButtons.forEach(button => {
     button.classList.add('active');
   });
 });
-
 
 
