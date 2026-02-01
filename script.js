@@ -383,7 +383,9 @@ $('totalInterest').textContent = fmt(baseInterest) + " (Actual Payable)";
   const savedInterest = baseInterest - withInterest;
   const savedMonths = baseline.monthsTaken - withPrepay.monthsTaken;
 $('afterPrepay').textContent =
-  `Interest Saved = ${fmt(baseInterest)} − ${fmt(withInterest)} = ${fmt(savedInterest)} | Tenure Reduced: ${savedMonths} months`;
+  `Interest Saved: ${fmt(baseInterest)} − ${fmt(withInterest)} = ${fmt(savedInterest)}`;
+$('tenureReduced').textContent =
+  `Tenure Reduced: ${fmt(savedMonths)} months`;
 
   // Remaining months countdown (live)
 // Remaining months from today
