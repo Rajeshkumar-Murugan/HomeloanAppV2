@@ -31,6 +31,9 @@
   color: #ffffff;
 }
 
+[data-theme="light"] label, #remainingCountdown {
+  color:#020617;
+}
 body{
   background:var(--bg);
   color:var(--text);
@@ -41,7 +44,7 @@ body{
 .toggle-btn.active{background:#2563eb;color:#fff}
   #tableWrap{
     overflow: scroll;
-    height: 420px;
+    height: 480px;
   }
 </style>
 </head>
@@ -55,9 +58,9 @@ body{
   <button id="themeToggle" class="btn btn-outline-secondary btn-sm">🌙 Dark</button>
 </div>
 
-<p class="small-muted mb-3">
+<!-- <p class="small-muted mb-3">
 Date-wise ROI changes, multiple prepayments, savings, charts, CSV / Excel / PDF
-</p>
+</p> -->
 
 <div class="row g-3">
 
@@ -191,6 +194,7 @@ Date-wise ROI changes, multiple prepayments, savings, charts, CSV / Excel / PDF
          <div class="mt-3">
  
   <div id="savingsList" class="mt-1"></div>
+  
 </div>
       
       </div>
@@ -222,7 +226,7 @@ Date-wise ROI changes, multiple prepayments, savings, charts, CSV / Excel / PDF
   <button id="showTable" class="btn btn-outline-primary toggle-btn">Table</button>
 </div>
 
-<canvas id="compareChart" style="max-height:420px;height:420px;"></canvas>
+<canvas id="compareChart" style="max-height:480px;height:480px;"></canvas>
 
 <div id="tableWrap" class="d-none">
   <div class="table-responsive mt-2">
@@ -245,6 +249,7 @@ Date-wise ROI changes, multiple prepayments, savings, charts, CSV / Excel / PDF
 
 </div>
 </div>
+
 
 <script>
 /* === UI ONLY ADDITIONS === */
