@@ -172,12 +172,20 @@ Date-wise ROI changes, multiple prepayments, savings, charts, CSV / Excel / PDF
 
 <div class="d-flex flex-wrap gap-2 mb-2">
   <div class="badge bg-light text-dark p-2">EMI: <span id="emi">-</span></div>
-  <div class="badge bg-light text-dark p-2">Interest: <span id="totalInterest">-</span></div>
-  <div class="badge bg-light text-dark p-2">Total: <span id="totalPayment">-</span></div>
-  <div class="badge bg-primary p-2" id="afterPrepay">-</div>
+<div class="badge bg-light text-dark p-2">
+  Interest (No Prepay): <span id="totalInterest">-</span>
 </div>
 
-<div id="remainingCountdown" class="fw-bold mb-2"></div>
+<div class="badge bg-light text-dark p-2">
+  Interest (With Prepay): <span id="interestWithPrepay">-</span>
+</div>
+  <div class="badge bg-light text-dark p-2">Total: <span id="totalPayment">-</span></div>
+  <div class="badge bg-primary p-2" id="afterPrepay">-</div>
+
+  <div id="remainingCountdown" class="badge bg-primary text-light p-2"></div>
+
+</div>
+
 
   
   
@@ -187,14 +195,15 @@ Date-wise ROI changes, multiple prepayments, savings, charts, CSV / Excel / PDF
     <h2 class="accordion-header">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
          <strong>Prepayment Savings</strong>
+
       </button>
     </h2>
     <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">
          <div class="mt-3">
- 
+
   <div id="savingsList" class="mt-1"></div>
-  
+
 </div>
       
       </div>
@@ -202,8 +211,6 @@ Date-wise ROI changes, multiple prepayments, savings, charts, CSV / Excel / PDF
   </div>
 </div>
   
-<div id="interestLeaderboard" class="mt-3"></div>
-
  <hr>
 <h6>📊 Loan Comparison</h6>
 <div class="row g-2 mb-2">
@@ -520,25 +527,6 @@ document.getElementById("jsonFileInput").addEventListener("change", function () 
 });
 
 
-function updateLeaderboard() {
-  const box = document.getElementById("interestLeaderboard");
-  box.innerHTML = "<h6>🏆 Interest Comparison</h6>";
-
-  const ranked = loanProfiles
-    .filter(l => l.result?.interest)
-    .sort((a, b) => a.result.interest - b.result.interest);
-
-  ranked.forEach((loan, i) => {
-    const diff = i === 0 ? "Lowest Interest" :
-      `+ ₹${(loan.result.interest - ranked[0].result.interest).toFixed(0)} vs Best`;
-
-    box.innerHTML += `
-      <div class="small">
-        ${i+1}. <strong>${loan.name}</strong> — ₹${loan.result.interest.toFixed(0)}
-        <span class="text-muted">(${diff})</span>
-      </div>`;
-  });
-}
 
 </script>
 
