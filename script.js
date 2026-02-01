@@ -448,29 +448,6 @@ $('exportCsv').addEventListener('click', ()=>{
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'amortization_with_prepay.csv'; a.click();
 });
 
-/* ---------- Excel Export (simple .xls fallback) ---------- */
-$('exportExcel').addEventListener('click', ()=>{
-  const rows = window._last?.withPrepay?.rows;
-  if(!rows){ alert('Run calculation first'); return; }
-  // Create an HTML table and save as .xls (works in Excel and many spreadsheet apps)
-  let html = '<table><thead><tr><th>Month</th><th>Date</th><th>ROI%</th><th>Opening</th><th>EMI</th><th>Interest</th><th>Principal</th><th>Prepay</th><th>Closing</th></tr></thead><tbody>';
-  rows.forEach(r=>{
-    html += `<tr>
-      <td>${r.month}</td>
-      <td>${ymd(r.date)}</td>
-      <td>${(r.roi||0).toFixed(2)}</td>
-      <td>${Number(r.opening).toFixed(2)}</td>
-      <td>${Number(r.emi).toFixed(2)}</td>
-      <td>${Number(r.interest).toFixed(2)}</td>
-      <td>${Number(r.principal).toFixed(2)}</td>
-      <td>${Number(r.prepay).toFixed(2)}</td>
-      <td>${Number(r.closing).toFixed(2)}</td>
-    </tr>`;
-  });
-  html += '</tbody></table>';
-  const blob = new Blob([html], {type: 'application/vnd.ms-excel'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'amortization_with_prepay.xls'; a.click();
-});
 
 /* ---------- PDF Export (with chart image) ---------- */
 $('exportPdf').addEventListener('click', async ()=>{
@@ -680,9 +657,5 @@ toggleButtons.forEach(button => {
   });
 });
 
-const accordionCollapseElementList = document.querySelectorAll('#myAccordion .collapse')
-const accordionCollapseList = [...accordionCollapseElementList].map(accordionCollapseEl => new bootstrap.Collapse(accordionCollapseEl))
-const bsCollapse = new bootstrap.Collapse('#myCollapse', {
-  toggle: false
-})
+
 
